@@ -311,13 +311,16 @@
     .settings-overlay, .changelog-overlay, .login-overlay {
       position: fixed;
       inset: 0;
-      z-index: 400;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
       background: rgba(0,0,0,.40);
     }
+
+    /* Login stays underneath; Settings/Changelog must open above it before authentication */
+    .login-overlay { z-index: 400; }
+    .settings-overlay, .changelog-overlay { z-index: 600; }
 
     .settings-overlay.open, .changelog-overlay.open, .login-overlay.open { display: flex; }
 
