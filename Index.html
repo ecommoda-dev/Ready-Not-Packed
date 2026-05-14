@@ -517,8 +517,8 @@
     <section class="hero-note">
       <div class="icon">ℹ️</div>
       <div>
-        الأداة تعمل Read-only. النتائج لا تُعرض إلا بعد التأكد أن الـ Order metafields المطلوبة
-        جاهزة للـ admin filtering، ثم يتم جلب الأوردرات وعمل direct verification قبل العرض.
+        الأداة تعمل Read-only. مؤقتًا، يتم عرض نتائج Shopify search كما ترجع من الـ query مباشرة
+        بدون إيقاف بسبب admin filtering وبدون direct post-filter verification.
       </div>
     </section>
 
@@ -565,7 +565,7 @@
       </div>
 
       <div class="metrics-row">
-        <div class="metric"><span>العدد المؤكد المعروض</span><strong class="mono" id="v1Verified">—</strong></div>
+        <div class="metric"><span>عدد نتائج Shopify المعروضة</span><strong class="mono" id="v1Verified">—</strong></div>
         <div class="metric"><span>Shopify search count</span><strong class="mono" id="v1SearchCount">—</strong></div>
         <div class="metric"><span>Precision</span><strong class="mono" id="v1Precision">—</strong></div>
         <div class="metric"><span>Pages loaded</span><strong class="mono" id="v1Pages">—</strong></div>
@@ -602,7 +602,7 @@
       </div>
 
       <div class="metrics-row">
-        <div class="metric"><span>العدد المؤكد المعروض</span><strong class="mono" id="v2Verified">—</strong></div>
+        <div class="metric"><span>عدد نتائج Shopify المعروضة</span><strong class="mono" id="v2Verified">—</strong></div>
         <div class="metric"><span>Shopify search count</span><strong class="mono" id="v2SearchCount">—</strong></div>
         <div class="metric"><span>Precision</span><strong class="mono" id="v2Precision">—</strong></div>
         <div class="metric"><span>Pages loaded</span><strong class="mono" id="v2Pages">—</strong></div>
@@ -1066,8 +1066,8 @@
       renderView1(v1);
       renderView2(v2);
 
-      document.getElementById('summaryV1').textContent = formatNumber(v1?.verifiedDisplayedCount ?? 0);
-      document.getElementById('summaryV2').textContent = formatNumber(v2?.verifiedDisplayedCount ?? 0);
+      document.getElementById('summaryV1').textContent = formatNumber(v1?.displayedSearchResultCount ?? 0);
+      document.getElementById('summaryV2').textContent = formatNumber(v2?.displayedSearchResultCount ?? 0);
       document.getElementById('summaryTime').textContent = formatCairo(data.generatedAt);
 
       document.getElementById('summaryV1Meta').textContent =
@@ -1079,13 +1079,13 @@
     function buildSummaryMeta(view) {
       if (!view) return '—';
       if (view.truncated) {
-        return `المعروض ${formatNumber(view.verifiedDisplayedCount)} من Shopify count ${formatNumber(view.countFromShopify)}`;
+        return `المعروض ${formatNumber(view.displayedSearchResultCount)} من Shopify count ${formatNumber(view.countFromShopify)}`;
       }
       return `Shopify count ${formatNumber(view.countFromShopify)} — ${view.countPrecision || '—'}`;
     }
 
     function renderView1(view) {
-      setText('v1Verified', formatNumber(view?.verifiedDisplayedCount ?? 0));
+      setText('v1Verified', formatNumber(view?.displayedSearchResultCount ?? 0));
       setText('v1SearchCount', formatNumber(view?.countFromShopify ?? 0));
       setText('v1Precision', view?.countPrecision || '—');
       setText('v1Pages', formatNumber(view?.pagesLoaded ?? 0));
@@ -1094,7 +1094,7 @@
     }
 
     function renderView2(view) {
-      setText('v2Verified', formatNumber(view?.verifiedDisplayedCount ?? 0));
+      setText('v2Verified', formatNumber(view?.displayedSearchResultCount ?? 0));
       setText('v2SearchCount', formatNumber(view?.countFromShopify ?? 0));
       setText('v2Precision', view?.countPrecision || '—');
       setText('v2Pages', formatNumber(view?.pagesLoaded ?? 0));
@@ -1114,7 +1114,7 @@
         notes.push(`تم إيقاف عرض القائمة عند حد ${formatNumber(latestData?.limits?.displayLimitPerView || 5000)} أوردر.`);
       }
       if (!view.truncated && !view.countMatchesDisplayedWhenNotTruncated) {
-        notes.push('يوجد فرق بين Shopify search count والعدد المؤكد بعد direct verification. راجع VERIFY-QUERIES.graphql ونتيجة الـ metafield filtering.');
+        notes.push('يوجد فرق بين Shopify search count وعدد نتائج Shopify التي تم تحميلها للعرض. راجع الـ pagination أو نتيجة الـ query نفسها.');
       }
 
       if (notes.length) {
