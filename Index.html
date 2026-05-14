@@ -1,1 +1,1267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جاهزية التغليف — EcomModa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:             #f3f4f6;
+      --surface:        #ffffff;
+      --surface-2:      #f9fafb;
+      --border:         #e5e7eb;
+      --border-strong:  #d1d5db;
+      --text-primary:   #111827;
+      --text-secondary: #6b7280;
+      --text-muted:     #6b7280;
+      --accent:         #2563eb;
+      --accent-light:   #eff6ff;
+      --accent-dark:    #1d4ed8;
+      --green:          #16a34a;
+      --green-light:    #f0fdf4;
+      --green-border:   #86efac;
+      --red:            #dc2626;
+      --red-light:      #fef2f2;
+      --red-border:     #fca5a5;
+      --amber:          #d97706;
+      --amber-light:    #fffbeb;
+      --amber-border:   #fcd34d;
+      --purple:         #7c3aed;
+      --purple-light:   #f5f3ff;
+      --purple-border:  #c4b5fd;
+      --radius:         12px;
+      --radius-sm:      8px;
+      --shadow:         0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+      --font-body:      'Noto Sans Arabic', -apple-system, sans-serif;
+      --font-mono:      'IBM Plex Mono', monospace;
+    }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 12px;
+      direction: rtl;
+    }
+
+    .mono { font-family: var(--font-mono); direction: ltr; unicode-bidi: plaintext; }
+
+    .app-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .app-title { display: flex; align-items: center; gap: 10px; }
+    .app-icon { font-size: 22px; }
+    .app-title-text h1 { font-size: 15px; font-weight: 700; line-height: 1.2; }
+    .app-title-text span { font-size: 11px; color: var(--text-muted); }
+    .app-header-btns { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .hbtn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 6px 12px;
+      border: 1.5px solid var(--border-strong);
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer; transition: all .15s; white-space: nowrap;
+    }
+    .hbtn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .hbtn:disabled { opacity: .55; cursor: not-allowed; }
+    .hbtn.settings-configured { border-color: var(--green); color: var(--green); background: var(--green-light); }
+    .hbtn.ver-btn {
+      border-color: #bfdbfe; color: #1d4ed8; background: #eff6ff;
+      font-family: var(--font-mono); font-weight: 700;
+    }
+    .hbtn.active-user { border-color: var(--green); color: var(--green); background: var(--green-light); }
+    .hbtn.active-user:hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
+    .hbtn.refreshing .ico { animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .app-main { display: flex; flex-direction: column; gap: 12px; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .summary-card, .panel, .hero-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .summary-card {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .summary-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .summary-value {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+
+    .summary-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-note {
+      padding: 14px 16px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--accent-light);
+      border-color: #bfdbfe;
+      color: #1e3a8a;
+      font-size: 13px;
+    }
+
+    .hero-note .icon { font-size: 18px; line-height: 1; }
+
+    .main-tabs-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 8px;
+    }
+
+    .main-seg {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .main-seg-btn {
+      border: 1.5px solid var(--border-strong);
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .main-seg-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .main-seg-btn.active { border-color: var(--accent); color: var(--accent-dark); background: var(--accent-light); }
+
+    .panel { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .panel.hidden { display: none; }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title h2 { font-size: 17px; font-weight: 800; }
+    .panel-title p { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+    .panel-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .btn-primary, .btn-secondary {
+      border-radius: var(--radius-sm);
+      padding: 9px 13px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid;
+      transition: .15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-secondary);
+      border-color: var(--border-strong);
+    }
+    .btn-secondary:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric span { font-size: 11px; color: var(--text-muted); }
+    .metric strong { font-size: 16px; font-weight: 800; }
+
+    .notice {
+      border-radius: var(--radius-sm);
+      padding: 11px 12px;
+      font-size: 12px;
+      line-height: 1.65;
+      border: 1px solid;
+      display: none;
+    }
+    .notice.show { display: block; }
+    .notice.info { background: var(--accent-light); border-color: #bfdbfe; color: #1e3a8a; }
+    .notice.warn { background: var(--amber-light); border-color: var(--amber-border); color: #92400e; }
+    .notice.error { background: var(--red-light); border-color: var(--red-border); color: #991b1b; }
+
+    .orders-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--surface-2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      color: var(--text-secondary);
+      font-weight: 800;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+
+    .empty-state {
+      padding: 28px 14px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid;
+    }
+    .status-pill.ready { background: var(--green-light); color: #15803d; border-color: var(--green-border); }
+    .status-pill.null { background: var(--purple-light); color: #6d28d9; border-color: var(--purple-border); }
+    .status-pill.tag { background: var(--accent-light); color: #1d4ed8; border-color: #bfdbfe; }
+
+    .settings-overlay, .changelog-overlay, .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.40);
+    }
+
+    .settings-overlay.open, .changelog-overlay.open, .login-overlay.open { display: flex; }
+
+    .settings-modal, .changelog-modal, .login-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      overflow: hidden;
+      animation: modalIn .18s ease;
+    }
+
+    .settings-modal { max-width: 420px; }
+    .changelog-modal { max-width: 520px; max-height: 80vh; display: flex; flex-direction: column; }
+    .login-card { max-width: 460px; }
+
+    @keyframes modalIn { from { transform: scale(.97); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .settings-modal-hdr, .changelog-modal-hdr, .login-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .modal-close-x {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 3px 7px;
+      border-radius: var(--radius-sm);
+      color: var(--red);
+    }
+    .modal-close-x:hover { background: var(--red-light); }
+
+    .settings-modal-body, .login-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .settings-field, .login-field { display: flex; flex-direction: column; gap: 5px; }
+
+    .settings-label, .login-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .settings-input, .login-input, .login-select {
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 10px 11px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      outline: none;
+      width: 100%;
+      direction: ltr;
+      background: var(--surface);
+    }
+
+    .login-select { font-family: var(--font-body); direction: rtl; font-size: 13px; }
+    .settings-input:focus, .login-input:focus, .login-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+    }
+
+    .settings-modal-ftr, .login-ftr {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .btn-modal-cancel, .btn-modal-save {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-modal-cancel { background: transparent; color: var(--text-secondary); }
+    .btn-modal-save { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .btn-modal-save:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+    .changelog-body { overflow-y: auto; padding: 20px; flex: 1; }
+    .cl-version-block { margin-bottom: 4px; }
+    .cl-version-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .cl-ver-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+      padding: 3px 10px; border-radius: 5px;
+      background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; direction: ltr;
+    }
+    .cl-ver-date { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); direction: ltr; }
+    .cl-items { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .cl-item { display: flex; gap: 8px; font-size: 13px; align-items: flex-start; }
+    .cl-tag { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; white-space: nowrap; margin-top: 2px; }
+    .cl-tag.new { background: #f0fdf4; color: #15803d; }
+
+    .login-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+      padding: 16px 18px 0;
+    }
+    .login-brand .big-icon { font-size: 34px; }
+    .login-brand h2 { font-size: 18px; font-weight: 800; }
+    .login-brand p { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+
+    .login-inline-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .login-step { display: none; flex-direction: column; gap: 14px; }
+    .login-step.show { display: flex; }
+
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
+      animation: toastIn .25s ease;
+      max-width: 360px;
+    }
+    @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: none; opacity: 1; } }
+    .toast-success { background: var(--green); }
+    .toast-error { background: var(--red); }
+    .toast-neutral { background: #1a1d27; }
+
+    @media (max-width: 980px) {
+      .summary-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 8px; }
+      .main-seg { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: 1fr; }
+      .panel-head { flex-direction: column; align-items: stretch; }
+      .panel-actions { width: 100%; }
+      .btn-primary, .btn-secondary { width: 100%; }
+      table { table-layout: auto; }
+      th:nth-child(3), td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-header">
+    <div class="app-title">
+      <div class="app-icon">📦</div>
+      <div class="app-title-text">
+        <h1>جاهزية التغليف</h1>
+        <span>عرض أوردرات Ready قبل التغليف وR&amp;E بدون tag packed</span>
+      </div>
+    </div>
+    <div class="app-header-btns">
+      <button class="hbtn" id="refreshBtn" onclick="doRefresh()"><span class="ico">↺</span> تحديث</button>
+      <button class="hbtn active-user" id="activeUserBtn" onclick="doLogout()">👤 —</button>
+      <button class="hbtn ver-btn" onclick="openChangelog()">v1.0.0 📋</button>
+      <button class="hbtn" id="settingsBtn" onclick="openSettings()">⚙️ الإعدادات</button>
+    </div>
+  </div>
+
+  <main class="app-main">
+    <section class="hero-note">
+      <div class="icon">ℹ️</div>
+      <div>
+        الأداة تعمل Read-only. النتائج لا تُعرض إلا بعد التأكد أن الـ Order metafields المطلوبة
+        جاهزة للـ admin filtering، ثم يتم جلب الأوردرات وعمل direct verification قبل العرض.
+      </div>
+    </section>
+
+    <section class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-label">View 1 — Ready بدون Packed By</div>
+        <div class="summary-value mono" id="summaryV1">—</div>
+        <div class="summary-meta" id="summaryV1Meta">لم يتم التحميل بعد</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">View 2 — R&amp;E Ready بدون packed</div>
+        <div class="summary-value mono" id="summaryV2">—</div>
+        <div class="summary-meta" id="summaryV2Meta">لم يتم التحميل بعد</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">آخر تحديث</div>
+        <div class="summary-value mono" id="summaryTime">—</div>
+        <div class="summary-meta">Cairo time</div>
+      </div>
+    </section>
+
+    <section class="main-tabs-wrap">
+      <div class="main-seg">
+        <button class="main-seg-btn active" id="tabUnpackedReady" onclick="switchView('unpackedReady')">
+          <span>📦</span>
+          <span>Ready + Packed By = null</span>
+        </button>
+        <button class="main-seg-btn" id="tabReReady" onclick="switchView('reReadyWithoutPackedTag')">
+          <span>↩️</span>
+          <span>R&amp;E Ready + Tags لا تحتوي packed</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel" id="panelUnpackedReady">
+      <div class="panel-head">
+        <div class="panel-title">
+          <h2>Ready + Packed By = null</h2>
+          <p class="mono">custom.manual_status = Ready AND custom.packed_by = null</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn-secondary" onclick="copyOrders('unpackedReady')">نسخ أرقام الأوردرات</button>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric"><span>العدد المؤكد المعروض</span><strong class="mono" id="v1Verified">—</strong></div>
+        <div class="metric"><span>Shopify search count</span><strong class="mono" id="v1SearchCount">—</strong></div>
+        <div class="metric"><span>Precision</span><strong class="mono" id="v1Precision">—</strong></div>
+        <div class="metric"><span>Pages loaded</span><strong class="mono" id="v1Pages">—</strong></div>
+      </div>
+
+      <div class="notice warn" id="v1Notice"></div>
+
+      <div class="orders-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%">Order</th>
+              <th style="width: 26%">الحالة</th>
+              <th style="width: 26%">Packed By</th>
+              <th style="width: 26%">آخر تحديث</th>
+            </tr>
+          </thead>
+          <tbody id="v1Rows">
+            <tr><td colspan="4"><div class="empty-state">سجّل الدخول ثم اضغط تحديث.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="panelReReady">
+      <div class="panel-head">
+        <div class="panel-title">
+          <h2>R&amp;E Ready + Tags لا تحتوي packed</h2>
+          <p class="mono">custom.status_2_r_e = Ready AND tag_not:packed</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn-secondary" onclick="copyOrders('reReadyWithoutPackedTag')">نسخ أرقام الأوردرات</button>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric"><span>العدد المؤكد المعروض</span><strong class="mono" id="v2Verified">—</strong></div>
+        <div class="metric"><span>Shopify search count</span><strong class="mono" id="v2SearchCount">—</strong></div>
+        <div class="metric"><span>Precision</span><strong class="mono" id="v2Precision">—</strong></div>
+        <div class="metric"><span>Pages loaded</span><strong class="mono" id="v2Pages">—</strong></div>
+      </div>
+
+      <div class="notice warn" id="v2Notice"></div>
+
+      <div class="orders-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%">Order</th>
+              <th style="width: 26%">الحالة</th>
+              <th style="width: 26%">Tags</th>
+              <th style="width: 26%">آخر تحديث</th>
+            </tr>
+          </thead>
+          <tbody id="v2Rows">
+            <tr><td colspan="4"><div class="empty-state">سجّل الدخول ثم اضغط تحديث.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsOnBackdrop(event)">
+    <div class="settings-modal">
+      <div class="settings-modal-hdr">
+        ⚙️ الإعدادات
+        <button class="modal-close-x" onclick="closeSettings()">✕</button>
+      </div>
+      <div class="settings-modal-body">
+        <div class="settings-field">
+          <label class="settings-label">WORKER URL</label>
+          <input type="text" class="settings-input" id="cfgUrl" />
+        </div>
+        <div class="settings-field">
+          <label class="settings-label">WORKER SECRET</label>
+          <input type="password" class="settings-input" id="cfgSecret" />
+        </div>
+        <div class="settings-field">
+          <label class="settings-label">ADMIN WORKER URL</label>
+          <input type="text" class="settings-input" id="cfgAdminUrl" />
+        </div>
+      </div>
+      <div class="settings-modal-ftr">
+        <button class="btn-modal-cancel" onclick="closeSettings()">إلغاء</button>
+        <button class="btn-modal-save" onclick="saveSettings()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Changelog Modal -->
+  <div class="changelog-overlay" id="changelogOverlay" onclick="closeChangelogOnBackdrop(event)">
+    <div class="changelog-modal">
+      <div class="changelog-modal-hdr">
+        📋 سجل التحديثات
+        <button class="modal-close-x" onclick="closeChangelog()">✕</button>
+      </div>
+      <div class="changelog-body">
+        <div class="cl-version-block">
+          <div class="cl-version-row">
+            <span class="cl-ver-badge">v1.0.0</span>
+            <span class="cl-ver-date">14-05-2026</span>
+          </div>
+          <ul class="cl-items">
+            <li class="cl-item"><span class="cl-tag new">جديد</span><span>إطلاق أداة Ready Packing Views.</span></li>
+            <li class="cl-item"><span class="cl-tag new">جديد</span><span>View 1: manual_status Ready و packed_by null.</span></li>
+            <li class="cl-item"><span class="cl-tag new">جديد</span><span>View 2: status_2_r_e Ready و tag_not:packed.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Overlay -->
+  <div class="login-overlay open" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="big-icon">🔐</div>
+        <h2>دخول الموظف</h2>
+        <p>اختر اسمك وأدخل PIN. الإعدادات متاحة قبل تسجيل الدخول.</p>
+        <div class="login-inline-actions">
+          <button class="btn-secondary" onclick="openSettings()">⚙️ فتح الإعدادات</button>
+        </div>
+      </div>
+
+      <div class="login-body">
+        <div class="notice info show" id="loginMessage">أدخل Worker URL وSecret من الإعدادات، ثم حمّل الموظفين.</div>
+
+        <div class="login-step show" id="loginStepEmployee">
+          <div class="login-field">
+            <label class="login-label">الموظف</label>
+            <select class="login-select" id="employeeSelect">
+              <option value="">—</option>
+            </select>
+          </div>
+          <button class="btn-primary" onclick="startLogin()">متابعة</button>
+          <button class="btn-secondary" onclick="loadEmployees()">تحديث قائمة الموظفين</button>
+        </div>
+
+        <div class="login-step" id="loginStepExistingPin">
+          <div class="login-field">
+            <label class="login-label">PIN</label>
+            <input type="password" inputmode="numeric" maxlength="4" class="login-input" id="existingPin" />
+          </div>
+          <button class="btn-primary" onclick="verifyExistingPin()">دخول</button>
+          <button class="btn-secondary" onclick="backToEmployeeStep()">رجوع</button>
+        </div>
+
+        <div class="login-step" id="loginStepNewPin">
+          <div class="login-field">
+            <label class="login-label">PIN جديد</label>
+            <input type="password" inputmode="numeric" maxlength="4" class="login-input" id="newPin" />
+          </div>
+          <div class="login-field">
+            <label class="login-label">تأكيد PIN</label>
+            <input type="password" inputmode="numeric" maxlength="4" class="login-input" id="confirmPin" />
+          </div>
+          <button class="btn-primary" onclick="registerPinAndLogin()">تسجيل PIN والدخول</button>
+          <button class="btn-secondary" onclick="backToEmployeeStep()">رجوع</button>
+        </div>
+      </div>
+
+      <div class="login-ftr">
+        <span class="summary-meta">Refresh = re-login by design</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    const LS_URL       = 'ready_packing_views_worker_url';
+    const LS_SECRET    = 'ready_packing_views_worker_secret';
+    const LS_ADMIN_URL = 'admin_worker_url';
+
+    let currentEmployee = null;
+    let selectedUsername = null;
+    let latestData = null;
+    let activeView = 'unpackedReady';
+
+    function getConfig() {
+      return {
+        workerUrl: localStorage.getItem(LS_URL) || '',
+        workerSecret: localStorage.getItem(LS_SECRET) || '',
+        adminUrl: localStorage.getItem(LS_ADMIN_URL) || '',
+      };
+    }
+
+    function isConfigured() {
+      const c = getConfig();
+      return c.workerUrl.startsWith('http') && c.workerSecret.length > 0;
+    }
+
+    function openSettings() {
+      const c = getConfig();
+      document.getElementById('cfgUrl').value = c.workerUrl || '';
+      document.getElementById('cfgSecret').value = c.workerSecret || '';
+      document.getElementById('cfgAdminUrl').value = c.adminUrl || '';
+      document.getElementById('settingsOverlay').classList.add('open');
+    }
+
+    function closeSettings() {
+      document.getElementById('settingsOverlay').classList.remove('open');
+    }
+
+    function closeSettingsOnBackdrop(e) {
+      if (e.target === e.currentTarget) closeSettings();
+    }
+
+    async function saveSettings() {
+      const url = document.getElementById('cfgUrl').value.trim();
+      const secret = document.getElementById('cfgSecret').value.trim();
+      const adminUrl = document.getElementById('cfgAdminUrl').value.trim();
+
+      if (!url || !secret) {
+        showToast('الرجاء إدخال الـ Worker URL والـ Secret', 'error');
+        return;
+      }
+
+      localStorage.setItem(LS_URL, url.replace(/\/$/, ''));
+      localStorage.setItem(LS_SECRET, secret);
+      localStorage.setItem(LS_ADMIN_URL, adminUrl.replace(/\/$/, ''));
+
+      updateSettingsState();
+      closeSettings();
+      showToast('تم حفظ الإعدادات', 'success');
+      await loadEmployees();
+    }
+
+    function updateSettingsState() {
+      const configured = isConfigured();
+      document.getElementById('settingsBtn').classList.toggle('settings-configured', configured);
+      const msg = document.getElementById('loginMessage');
+      if (!configured) {
+        msg.textContent = 'أدخل Worker URL وSecret من الإعدادات، ثم حمّل الموظفين.';
+        msg.className = 'notice info show';
+      }
+    }
+
+    function openChangelog() {
+      document.getElementById('changelogOverlay').classList.add('open');
+    }
+
+    function closeChangelog() {
+      document.getElementById('changelogOverlay').classList.remove('open');
+    }
+
+    function closeChangelogOnBackdrop(e) {
+      if (e.target === e.currentTarget) closeChangelog();
+    }
+
+    function showToast(message, type = 'neutral') {
+      const container = document.getElementById('toastContainer');
+      const el = document.createElement('div');
+      el.className = `toast toast-${type}`;
+      el.textContent = message;
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 3600);
+    }
+
+    function encodeParams(params = {}) {
+      const usp = new URLSearchParams();
+      Object.entries(params).forEach(([k, v]) => {
+        if (v !== null && v !== undefined && String(v) !== '') usp.set(k, String(v));
+      });
+      return usp.toString();
+    }
+
+    async function apiGet(action, params = {}) {
+      const cfg = getConfig();
+      if (!isConfigured()) throw new Error('الإعدادات غير مكتملة');
+      const base = cfg.workerUrl.replace(/\/$/, '');
+      const qs = encodeParams({ action, ...params });
+      const resp = await fetch(`${base}?${qs}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${cfg.workerSecret}`,
+        },
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || data?.ok === false) {
+        const error = new Error(data?.error || `HTTP ${resp.status}`);
+        error.payload = data;
+        error.status = resp.status;
+        throw error;
+      }
+      return data;
+    }
+
+    async function apiPost(action, body = {}, params = {}) {
+      const cfg = getConfig();
+      if (!isConfigured()) throw new Error('الإعدادات غير مكتملة');
+      const base = cfg.workerUrl.replace(/\/$/, '');
+      const qs = encodeParams({ action, ...params });
+      const resp = await fetch(`${base}?${qs}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${cfg.workerSecret}`,
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || data?.ok === false) {
+        const error = new Error(data?.error || `HTTP ${resp.status}`);
+        error.payload = data;
+        error.status = resp.status;
+        throw error;
+      }
+      return data;
+    }
+
+    async function loadEmployees() {
+      const select = document.getElementById('employeeSelect');
+      select.innerHTML = '<option value="">—</option>';
+
+      if (!isConfigured()) return;
+
+      try {
+        const data = await apiGet('get_employees');
+        const employees = Array.isArray(data.employees) ? data.employees : [];
+        for (const emp of employees) {
+          const option = document.createElement('option');
+          option.value = emp.username;
+          option.textContent = emp.display_name;
+          select.appendChild(option);
+        }
+        const msg = document.getElementById('loginMessage');
+        msg.textContent = employees.length
+          ? 'اختر الموظف ثم اضغط متابعة.'
+          : 'لا يوجد موظفون نشطون في D1.';
+        msg.className = employees.length ? 'notice info show' : 'notice warn show';
+      } catch (err) {
+        showLoginError(err);
+      }
+    }
+
+    async function startLogin() {
+      const username = document.getElementById('employeeSelect').value;
+      if (!username) {
+        showToast('اختر الموظف أولًا', 'error');
+        return;
+      }
+
+      try {
+        const data = await apiGet('check_employee', { username });
+        if (!data.exists) {
+          throw new Error('اسم المستخدم غير موجود');
+        }
+        if (!data.isActive) {
+          throw new Error('الحساب موقوف — تواصل مع المسؤول');
+        }
+
+        selectedUsername = username;
+        if (data.hasPin) {
+          switchLoginStep('existing');
+          document.getElementById('existingPin').value = '';
+          document.getElementById('existingPin').focus();
+        } else {
+          switchLoginStep('new');
+          document.getElementById('newPin').value = '';
+          document.getElementById('confirmPin').value = '';
+          document.getElementById('newPin').focus();
+        }
+      } catch (err) {
+        showLoginError(err);
+      }
+    }
+
+    function switchLoginStep(step) {
+      document.getElementById('loginStepEmployee').classList.toggle('show', step === 'employee');
+      document.getElementById('loginStepExistingPin').classList.toggle('show', step === 'existing');
+      document.getElementById('loginStepNewPin').classList.toggle('show', step === 'new');
+    }
+
+    function backToEmployeeStep() {
+      selectedUsername = null;
+      switchLoginStep('employee');
+    }
+
+    function validPin(pin) {
+      return /^\d{4}$/.test(String(pin || ''));
+    }
+
+    async function verifyExistingPin() {
+      const pin = document.getElementById('existingPin').value.trim();
+      if (!validPin(pin)) {
+        showToast('PIN يجب أن يكون 4 أرقام', 'error');
+        return;
+      }
+
+      try {
+        const data = await apiPost('verify_employee', {
+          username: selectedUsername,
+          pin,
+        });
+        finishLogin(selectedUsername, data.displayName);
+      } catch (err) {
+        showLoginError(err);
+      }
+    }
+
+    async function registerPinAndLogin() {
+      const pin = document.getElementById('newPin').value.trim();
+      const confirm = document.getElementById('confirmPin').value.trim();
+
+      if (!validPin(pin)) {
+        showToast('PIN يجب أن يكون 4 أرقام', 'error');
+        return;
+      }
+      if (pin !== confirm) {
+        showToast('تأكيد الـ PIN غير مطابق', 'error');
+        return;
+      }
+
+      try {
+        await apiPost('register_pin', {
+          username: selectedUsername,
+          pin,
+        });
+        const data = await apiPost('verify_employee', {
+          username: selectedUsername,
+          pin,
+        });
+        finishLogin(selectedUsername, data.displayName);
+      } catch (err) {
+        showLoginError(err);
+      }
+    }
+
+    function finishLogin(username, displayName) {
+      currentEmployee = { username, displayName };
+      document.getElementById('loginOverlay').classList.remove('open');
+      document.getElementById('activeUserBtn').textContent = `👤 ${displayName}`;
+      showToast(`أهلاً ${displayName}`, 'success');
+      refreshViews();
+    }
+
+    async function doLogout() {
+      if (currentEmployee?.username && isConfigured()) {
+        try {
+          await apiGet('log_logout', { username: currentEmployee.username });
+        } catch (_) {}
+      }
+
+      currentEmployee = null;
+      selectedUsername = null;
+      latestData = null;
+      document.getElementById('activeUserBtn').textContent = '👤 —';
+      document.getElementById('loginOverlay').classList.add('open');
+      switchLoginStep('employee');
+      resetDashboard();
+      showToast('تم تسجيل الخروج', 'neutral');
+    }
+
+    async function doRefresh() {
+      if (!currentEmployee) {
+        showToast('سجّل الدخول أولًا', 'error');
+        return;
+      }
+      await refreshViews();
+    }
+
+    async function refreshViews() {
+      if (!currentEmployee) return;
+
+      const btn = document.getElementById('refreshBtn');
+      btn.disabled = true;
+      btn.classList.add('refreshing');
+
+      try {
+        const data = await apiGet('get_ready_views', {
+          employee: currentEmployee.username,
+        });
+        latestData = data;
+        renderDashboard(data);
+        showToast('تم تحديث النتائج', 'success');
+      } catch (err) {
+        showDashboardError(err);
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('refreshing');
+      }
+    }
+
+    function switchView(view) {
+      activeView = view;
+      document.getElementById('tabUnpackedReady').classList.toggle('active', view === 'unpackedReady');
+      document.getElementById('tabReReady').classList.toggle('active', view === 'reReadyWithoutPackedTag');
+      document.getElementById('panelUnpackedReady').classList.toggle('hidden', view !== 'unpackedReady');
+      document.getElementById('panelReReady').classList.toggle('hidden', view !== 'reReadyWithoutPackedTag');
+    }
+
+    function renderDashboard(data) {
+      const v1 = data?.views?.unpackedReady;
+      const v2 = data?.views?.reReadyWithoutPackedTag;
+
+      renderView1(v1);
+      renderView2(v2);
+
+      document.getElementById('summaryV1').textContent = formatNumber(v1?.verifiedDisplayedCount ?? 0);
+      document.getElementById('summaryV2').textContent = formatNumber(v2?.verifiedDisplayedCount ?? 0);
+      document.getElementById('summaryTime').textContent = formatCairo(data.generatedAt);
+
+      document.getElementById('summaryV1Meta').textContent =
+        buildSummaryMeta(v1);
+      document.getElementById('summaryV2Meta').textContent =
+        buildSummaryMeta(v2);
+    }
+
+    function buildSummaryMeta(view) {
+      if (!view) return '—';
+      if (view.truncated) {
+        return `المعروض ${formatNumber(view.verifiedDisplayedCount)} من Shopify count ${formatNumber(view.countFromShopify)}`;
+      }
+      return `Shopify count ${formatNumber(view.countFromShopify)} — ${view.countPrecision || '—'}`;
+    }
+
+    function renderView1(view) {
+      setText('v1Verified', formatNumber(view?.verifiedDisplayedCount ?? 0));
+      setText('v1SearchCount', formatNumber(view?.countFromShopify ?? 0));
+      setText('v1Precision', view?.countPrecision || '—');
+      setText('v1Pages', formatNumber(view?.pagesLoaded ?? 0));
+      renderNotice('v1Notice', view);
+      renderRows('v1Rows', view?.orders || [], 'v1');
+    }
+
+    function renderView2(view) {
+      setText('v2Verified', formatNumber(view?.verifiedDisplayedCount ?? 0));
+      setText('v2SearchCount', formatNumber(view?.countFromShopify ?? 0));
+      setText('v2Precision', view?.countPrecision || '—');
+      setText('v2Pages', formatNumber(view?.pagesLoaded ?? 0));
+      renderNotice('v2Notice', view);
+      renderRows('v2Rows', view?.orders || [], 'v2');
+    }
+
+    function renderNotice(id, view) {
+      const el = document.getElementById(id);
+      el.className = 'notice warn';
+      el.textContent = '';
+
+      if (!view) return;
+
+      const notes = [];
+      if (view.truncated) {
+        notes.push(`تم إيقاف عرض القائمة عند حد ${formatNumber(latestData?.limits?.displayLimitPerView || 5000)} أوردر.`);
+      }
+      if (!view.truncated && !view.countMatchesDisplayedWhenNotTruncated) {
+        notes.push('يوجد فرق بين Shopify search count والعدد المؤكد بعد direct verification. راجع VERIFY-QUERIES.graphql ونتيجة الـ metafield filtering.');
+      }
+
+      if (notes.length) {
+        el.textContent = notes.join(' ');
+        el.classList.add('show');
+      }
+    }
+
+    function renderRows(tbodyId, orders, mode) {
+      const tbody = document.getElementById(tbodyId);
+      if (!orders.length) {
+        tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state">لا توجد أوردرات مطابقة.</div></td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = orders.map(order => {
+        const updated = order.updatedAt ? formatCairo(order.updatedAt) : '—';
+        if (mode === 'v1') {
+          return `
+            <tr>
+              <td class="mono">${escapeHtml(order.name)}</td>
+              <td><span class="status-pill ready">Ready</span></td>
+              <td><span class="status-pill null">null</span></td>
+              <td class="mono">${escapeHtml(updated)}</td>
+            </tr>
+          `;
+        }
+        const tagsText = Array.isArray(order.tags) && order.tags.length
+          ? order.tags.join(', ')
+          : '—';
+        return `
+          <tr>
+            <td class="mono">${escapeHtml(order.name)}</td>
+            <td><span class="status-pill ready">Ready</span></td>
+            <td><span class="status-pill tag">${escapeHtml(tagsText)}</span></td>
+            <td class="mono">${escapeHtml(updated)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function copyOrders(viewKey) {
+      const view = latestData?.views?.[viewKey];
+      const names = Array.isArray(view?.orders) ? view.orders.map(o => o.name).join('\n') : '';
+      if (!names) {
+        showToast('لا توجد أرقام للنسخ', 'neutral');
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(names);
+        showToast('تم نسخ أرقام الأوردرات', 'success');
+      } catch {
+        fallbackCopy(names);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy');
+        showToast('تم نسخ أرقام الأوردرات', 'success');
+      } catch {
+        showToast('تعذر النسخ من المتصفح', 'error');
+      }
+      area.remove();
+    }
+
+    function showLoginError(err) {
+      const payload = err?.payload || {};
+      const msg = payload?.error || err?.message || 'خطأ غير معروف';
+      const el = document.getElementById('loginMessage');
+      el.textContent = msg;
+      el.className = 'notice error show';
+      showToast(msg, 'error');
+    }
+
+    function showDashboardError(err) {
+      const payload = err?.payload || {};
+      let msg = payload?.error || err?.message || 'خطأ غير معروف';
+
+      if (payload?.code === 'METAFIELD_FILTER_NOT_READY') {
+        msg += ' افتح README-DEPLOY.md وفعّل admin filtering للـ metafields المطلوبة.';
+      }
+      if (payload?.code === 'SHOPIFY_SEARCH_WARNINGS') {
+        msg += ' راجع VERIFY-QUERIES.graphql لاختبار query داخل GraphiQL.';
+      }
+
+      showToast(msg, 'error');
+      const visibleNoticeId = activeView === 'unpackedReady' ? 'v1Notice' : 'v2Notice';
+      const el = document.getElementById(visibleNoticeId);
+      el.textContent = msg;
+      el.className = 'notice error show';
+    }
+
+    function resetDashboard() {
+      setText('summaryV1', '—');
+      setText('summaryV2', '—');
+      setText('summaryTime', '—');
+      setText('summaryV1Meta', 'لم يتم التحميل بعد');
+      setText('summaryV2Meta', 'لم يتم التحميل بعد');
+
+      ['v1Verified','v1SearchCount','v1Precision','v1Pages','v2Verified','v2SearchCount','v2Precision','v2Pages']
+        .forEach(id => setText(id, '—'));
+
+      document.getElementById('v1Notice').className = 'notice warn';
+      document.getElementById('v2Notice').className = 'notice warn';
+      document.getElementById('v1Rows').innerHTML = '<tr><td colspan="4"><div class="empty-state">سجّل الدخول ثم اضغط تحديث.</div></td></tr>';
+      document.getElementById('v2Rows').innerHTML = '<tr><td colspan="4"><div class="empty-state">سجّل الدخول ثم اضغط تحديث.</div></td></tr>';
+    }
+
+    function formatNumber(n) {
+      return Number(n || 0).toLocaleString('en-US');
+    }
+
+    function toCairo(iso) {
+      return new Date(new Date(iso).getTime() + 3 * 60 * 60 * 1000);
+    }
+
+    function pad2(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function formatCairo(iso) {
+      if (!iso) return '—';
+      const d = toCairo(iso);
+      return `${d.getUTCFullYear()}-${pad2(d.getUTCMonth() + 1)}-${pad2(d.getUTCDate())} ${pad2(d.getUTCHours())}:${pad2(d.getUTCMinutes())}`;
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function escapeHtml(v) {
+      return String(v ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      updateSettingsState();
+      resetDashboard();
+      await loadEmployees();
+    });
+  </script>
+</body>
+</html>
